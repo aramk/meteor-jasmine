@@ -12,7 +12,7 @@ runCodeInContext = function (code, context, filename) {
       vm.runInThisContext(code, filename)
     }
   } catch(error) {
-    log.error('The code has syntax errors.', error)
+    logError('The code has syntax errors.', error)
   }
 }
 
@@ -25,6 +25,12 @@ runFileInContext = function (filename, context) {
       vm.runInThisContext(code, filename)
     }
   } catch(error) {
-    log.error('The file "' + filename + '" has syntax errors.', error)
+    logError('The file "' + filename + '" has syntax errors.', error)
   }
+}
+
+var logError = function(msg, error) {
+  var args = [msg, error];
+  if (error) { args.push(error.stack) }
+  log.error.apply(log, args);
 }
